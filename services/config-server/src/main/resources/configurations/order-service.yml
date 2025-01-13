@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/product
+    username: keshav
+    password: keshav
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+server:
+  port: 8070
+application:
+  config:
+    customer-url: http://localhost:8090/api/customer
+    product-url: http://localhost:8050/api/products
