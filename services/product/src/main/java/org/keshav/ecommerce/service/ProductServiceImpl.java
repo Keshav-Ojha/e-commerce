@@ -13,12 +13,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository repository;
 
     private final ProductMapper mapper;
+
+    public ProductServiceImpl(ProductRepository repository, ProductMapper mapper) {
+        this.repository = repository;
+        this.mapper = mapper;
+    }
 
     @Override
     public Integer addProduct(ProductRequest request) {
