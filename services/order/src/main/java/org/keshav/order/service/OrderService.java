@@ -11,6 +11,8 @@ import org.keshav.order.order.OrderMapper;
 import org.keshav.order.order.OrderRequest;
 import org.keshav.order.order.OrderResponse;
 import org.keshav.order.orderline.OrderLineRequest;
+import org.keshav.order.payment.PaymentClient;
+import org.keshav.order.payment.PaymentRequest;
 import org.keshav.order.product.ProductClient;
 import org.keshav.order.product.PurchaseRequest;
 import org.keshav.order.repository.OrderRespository;
@@ -33,6 +35,8 @@ public class OrderService {
     private final OrderLineService orderLineService;
 
     private final OrderProducer orderProducer;
+
+    private final PaymentClient paymentClient;
 
 //    public OrderService(OrderRespository repository, CustomerClient customerClient, ProductClient productClient, OrderMapper mapper, OrderLineService orderLineService) {
 //        this.repository = repository;
@@ -65,7 +69,17 @@ public class OrderService {
             );
         }
 
-        //todo start payment process --> payment-ms
+        //start payment process --> payment-ms
+
+        var paymentRequest = new PaymentRequest(
+                request.amount(),
+                request.paymentMethod(),
+                order.getId(),
+                order.getReference(),
+                customer
+        );
+        paymentClient.requestOrderPayment(paymentRequest);
+
 
         //send the order confirmation to notification-ms(kafka)
 

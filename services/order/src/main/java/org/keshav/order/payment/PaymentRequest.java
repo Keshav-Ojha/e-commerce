@@ -1,15 +1,15 @@
-package org.keshav.payment.entity.payment;
+package org.keshav.order.payment;
 
-import org.keshav.payment.entity.Customer;
+import org.keshav.order.customer.CustomerResponse;
+import org.keshav.order.order.PaymentMethod;
 
 import java.math.BigDecimal;
 
 public record PaymentRequest(
-        Integer id,
         BigDecimal amount,
         PaymentMethod paymentMethod,
         Integer orderId,
         String orderReference,
-        Customer customer
+        CustomerResponse customer
 ) {
 }

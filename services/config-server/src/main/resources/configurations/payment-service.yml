@@ -15,10 +15,6 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
-        spring.json.type.mapping: orderConfirmation:org.keshav.order.kafka.OrderConfirmation
+        spring.json.type.mapping: paymentNotificationRequest:org.keshav.payment.notification.paymentNotificationRequest
 server:
   port: 8060
-application:
-  config:
-    customer-url: http://localhost:8090/api/customer
-    product-url: http://localhost:8050/api/products

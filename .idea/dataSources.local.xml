@@ -10,10 +10,16 @@
       <user-name>keshav</user-name>
       <schema-mapping>
         <introspection-scope>
-          <node kind="database">
-            <name qname="@" />
-            <name qname="product" />
-            <node kind="schema" qname="@" />
+          <node negative="1">
+            <node kind="database">
+              <name qname="@" />
+              <name qname="product" />
+              <node kind="schema" qname="@" />
+            </node>
+            <node kind="database">
+              <name qname="order" />
+              <name qname="payment" />
+            </node>
           </node>
         </introspection-scope>
       </schema-mapping>
