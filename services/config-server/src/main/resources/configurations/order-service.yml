@@ -20,5 +20,6 @@ server:
   port: 8070
 application:
   config:
-    customer-url: http://localhost:8090/api/customer
-    product-url: http://localhost:8050/api/products
+    customer-url: http://localhost:8222/api/customers
+    payment-url: http://localhost:8222/api/payments
+    product-url: http://localhost:8222/api/products
