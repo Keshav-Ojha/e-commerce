@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/order
+    url: jdbc:postgresql://localhost:5433/payment
     username: keshav
     password: keshav
     driver-class-name: org.postgresql.Driver
@@ -17,7 +17,7 @@ spring:
       properties:
         spring.json.type.mapping: orderConfirmation:org.keshav.order.kafka.OrderConfirmation
 server:
-  port: 8070
+  port: 8060
 application:
   config:
     customer-url: http://localhost:8090/api/customer
