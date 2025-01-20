@@ -26,5 +26,6 @@ spring:
           predicates:
             - Path=/api/payments/**
 
+
 server:
   port: 8222

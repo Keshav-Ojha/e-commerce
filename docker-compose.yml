@@ -1,4 +1,87 @@
 services:
+  api-gateway:
+    build:
+      context: ./services/gateway
+      dockerfile: Dockerfile
+    ports:
+      - "8888:8888"
+    networks:
+      - microservices-net
+
+  discovery-server:
+    build:
+      context: ./services/discovery-server
+      dockerfile: Dockerfile
+    networks:
+      - microservices-net
+
+  config-server:
+    build:
+      context: ./services/config-server
+      dockerfile: Dockerfile
+    networks:
+      - microservices-net
+
+  customer-service:
+    build:
+      context: ./services/customer # Path to the service directory
+      dockerfile: Dockerfile
+    networks:
+      - microservices-net
+    depends_on:
+      - mongo
+      - config-server
+      - discovery-server
+      - api-gateway
+
+  product-service:
+    build:
+      context: ./services/product # Path to the service directory
+      dockerfile: Dockerfile
+    networks:
+      - microservices-net
+    depends_on:
+      - postgres
+      - config-server
+      - discovery-server
+      - api-gateway
+
+  order-service:
+    build:
+      context: ./services/order # Path to the service directory
+      dockerfile: Dockerfile
+    networks:
+      - microservices-net
+    depends_on:
+      - postgres
+      - config-server
+      - discovery-server
+      - api-gateway
+
+  payment-service:
+    build:
+      context: ./services/payment # Path to the service directory
+      dockerfile: Dockerfile
+    networks:
+      - microservices-net
+    depends_on:
+      - postgres
+      - config-server
+      - discovery-server
+      - api-gateway
+
+  notification-service:
+    build:
+      context: ./services/notification # Path to the service directory
+      dockerfile: Dockerfile
+    networks:
+      - microservices-net
+    depends_on:
+      - mongo
+      - config-server
+      - discovery-server
+      - api-gateway
+
   postgres:
     container_name: ms_pg_sql
     image: postgres
@@ -83,14 +166,20 @@ services:
     networks:
       - microservices-net
 
-
-
   mail-dev:
     container_name: ms_mail_dev
     image: maildev/maildev
     ports:
       - 1080:1080
       - 1025:1025
+
+  zipkin:
+    container_name: zipkin
+    image: openzipkin/zipkin
+    ports:
+      - 9411:9411
+    networks:
+      - microservices-net
 
 networks:
   microservices-net:
