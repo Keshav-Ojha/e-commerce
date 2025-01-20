@@ -29,37 +29,42 @@ services:
       - microservices-net
     restart: unless-stopped
 
-  mongodb:
+  mongo:
     container_name: ms_mongo_db
-    image: mongo
+    image: mongo:7.0
     ports:
-      - 27017:27017
+      - "27018:27017"
     volumes:
-      - mongo:/data
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=keshav
-      - MONGO_INITDB_ROOT_PASSWORD=keshav
+      - mongo_data:/data/db
+    networks:
+      - microservices-net
 
   mongo-express:
     container_name: ms_mongo_express
-    image: mongo-express
+    image: mongo-express:1.0.0-alpha.4
     restart: always
     ports:
-      - 8081:8081
+      - "8081:8081"
     environment:
-      - ME_CONFIG_MONGODB_ADMINUSERNAME=keshav
-      - ME_CONFIG_MONGODB_ADMINPASSWORD=keshav
-      - ME_CONFIG_MONGODB_SERVER=mongodb
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ""
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ""
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: admin123
+    networks:
+      - microservices-net
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
     container_name: zookeeper
     environment:
       ZOOKEEPER_SERVER_ID: 1
-      ZOOKEEPER_CLIENT_PORT: 2081
+      ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
     ports:
       - 2181:2181
+    networks:
+      - microservices-net
 
   kafka:
     image: confluentinc/cp-kafka:latest
@@ -95,5 +100,5 @@ networks:
 volumes:
   postgres:
   pgadmin:
-  mongo:
+  mongo_data:
 

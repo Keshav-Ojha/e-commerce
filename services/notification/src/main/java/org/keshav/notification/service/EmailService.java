@@ -4,7 +4,6 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.keshav.notification.entity.notification.email.EmailTemplates;
 import org.keshav.notification.kafka.order.Product;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -14,14 +13,14 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.math.BigDecimal;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static java.nio.charset.StandardCharsets.*;
-import static org.keshav.notification.entity.notification.email.EmailTemplates.*;
-import static org.springframework.mail.javamail.MimeMessageHelper.*;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.keshav.notification.entity.notification.email.EmailTemplates.ORDER_CONFIRMATION;
+import static org.keshav.notification.entity.notification.email.EmailTemplates.PAYMENT_CONFIRMATION;
+import static org.springframework.mail.javamail.MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED;
 
 @Service
 @RequiredArgsConstructor
@@ -44,7 +43,7 @@ public class EmailService {
                 mimeMessage,
                 MULTIPART_MODE_MIXED_RELATED,
                 UTF_8.name());
-        mimeMessageHelper.setFrom("keshavojha98@gmail.com");
+        mimeMessageHelper.setFrom("e-commerce-app@mail.com");
 
         final String templateName = PAYMENT_CONFIRMATION.getTemplate();
 
@@ -82,7 +81,7 @@ public class EmailService {
                 mimeMessage,
                 MULTIPART_MODE_MIXED_RELATED,
                 UTF_8.name());
-        mimeMessageHelper.setFrom("keshavojha98@gmail.com");
+        mimeMessageHelper.setFrom("e-commerce-app@mail.com");
 
         final String templateName = ORDER_CONFIRMATION.getTemplate();
 

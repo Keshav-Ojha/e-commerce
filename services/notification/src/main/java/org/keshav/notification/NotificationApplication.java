@@ -2,6 +2,9 @@ package org.keshav.notification;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
@@ -12,4 +15,8 @@ public class NotificationApplication {
         SpringApplication.run(NotificationApplication.class, args);
     }
 
+//    @Bean
+//    public JavaMailSender getJavaMailSender() {
+//        return new JavaMailSenderImpl();
+//    }
 }

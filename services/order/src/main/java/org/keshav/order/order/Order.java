@@ -44,4 +44,7 @@ public class Order {
     @Column(updatable = false, nullable = false)
     private LocalDateTime lastModifiedDate;
 
+    public Integer getId() {
+        return id;
+    }
 }

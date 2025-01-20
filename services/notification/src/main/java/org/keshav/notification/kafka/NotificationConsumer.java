@@ -63,11 +63,12 @@ public class NotificationConsumer {
         //send email
         var customerName = orderConfirmation.customer().firstName() + " " + orderConfirmation.customer().lastName();
 
-        emailService.sendPaymentSuccessEmail(
+        emailService.sendOrderSuccessEmail(
                 orderConfirmation.customer().email(),
                 customerName,
                 orderConfirmation.totalAmount(),
-                orderConfirmation.orderReference()
+                orderConfirmation.orderReference(),
+                orderConfirmation.products()
         );
     }
 
