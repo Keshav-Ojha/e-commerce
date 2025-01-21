@@ -7,6 +7,10 @@ services:
       - "8222:8222"
     networks:
       - microservices-net
+#    environment:
+#      - CONFIG_SERVER_URL=http://config-server:8888
+    depends_on:
+      - config-server
 
   discovery-server:
     build:
@@ -14,6 +18,13 @@ services:
       dockerfile: Dockerfile
     networks:
       - microservices-net
+#    environment:
+#      - SPRING_PROFILES_ACTIVE=docker
+#      - CONFIG_SERVER_URL=http://config-server:8888
+    ports:
+      - "8761:8761"
+    depends_on:
+      - config-server
 
   config-server:
     build:
@@ -21,6 +32,16 @@ services:
       dockerfile: Dockerfile
     networks:
       - microservices-net
+    environment:
+      - SPRING_PROFILES_ACTIVE=native
+      - EUREKA_SERVER_URL=http://discover-server:8761/eureka/
+      - ZIPKIN_SERVER_URL=http://zipkin:9411/api/v2/spans
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8888/actuator/health" ]
+      interval: 30s
+      retries: 3
+      start_period: 10s
+      timeout: 5s
 
   customer-service:
     build:
@@ -33,6 +54,8 @@ services:
       - config-server
       - discovery-server
       - api-gateway
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
 
   product-service:
     build:
@@ -45,6 +68,8 @@ services:
       - config-server
       - discovery-server
       - api-gateway
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
 
   order-service:
     build:
@@ -57,6 +82,8 @@ services:
       - config-server
       - discovery-server
       - api-gateway
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
 
   payment-service:
     build:
@@ -69,6 +96,8 @@ services:
       - config-server
       - discovery-server
       - api-gateway
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
 
   notification-service:
     build:
@@ -81,6 +110,8 @@ services:
       - config-server
       - discovery-server
       - api-gateway
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
 
   postgres:
     container_name: ms_pg_sql

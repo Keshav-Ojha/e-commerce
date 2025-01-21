@@ -26,6 +26,12 @@ spring:
           predicates:
             - Path=/api/payments/**
 
+eureka:
+  instance:
+    hostname: discovery-server
+  client:
+    service-url:
+      defaultZone: http://discovery-server:8761/eureka/
 
 server:
   port: 8222

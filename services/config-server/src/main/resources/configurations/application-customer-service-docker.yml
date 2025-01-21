@@ -1,0 +1,13 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://mongo:27017/customerdb
+server:
+  port: 8090
+
+eureka:
+  instance:
+    hostname: discovery-server
+  client:
+    service-url:
+      defaultZone: http://discovery-server:8761/eureka/
