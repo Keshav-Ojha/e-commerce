@@ -16,6 +16,9 @@ RUN mvn clean package -DskipTests
 FROM openjdk:17-jdk-slim
 WORKDIR /app
 
+#adding curl for healthcheck
+RUN apt-get update && apt-get install -y curl
+
 # Copy the JAR file from the build stage
 COPY --from=builder /app/target/*.jar app.jar
 

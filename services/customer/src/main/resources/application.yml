@@ -1,5 +1,31 @@
+server:
+  port: 8090
+
 spring:
-  config:
-    import: optional:configserver:http://config-server:8888
   application:
     name: customer-service
+  cloud:
+    config:
+      enabled: false
+  data:
+    mongodb:
+      uri: mongodb://mongo:27017/customerdb
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discovery-server:8761/eureka/
+
+management:
+  zipkin:
+    tracing:
+      endpoint: http://zipkin:9411/api/v2/spans
+      connect-timeout: 1s
+      read-timeout: 10s
+  tracing:
+    sampling:
+      probability: 1.0
+  endpoints:
+    web:
+      exposure:
+        include: health,info

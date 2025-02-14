@@ -1,6 +1,11 @@
+server:
+  port: 8050
+
 spring:
+  application:
+    name: product-service
   datasource:
-    url: jdbc:postgresql://localhost:5433/product
+    url: jdbc:postgresql://postgres:5433/product
     username: keshav
     password: keshav
     driver-class-name: org.postgresql.Driver
@@ -16,5 +21,4 @@ spring:
     baseline-version: 0
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
-server:
-  port: 8050
+

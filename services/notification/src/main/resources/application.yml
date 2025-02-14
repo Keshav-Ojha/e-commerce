@@ -1,5 +1,58 @@
+server:
+  port: 8100
 spring:
   application:
     name: notification-service
-  config:
-    import: optional:configserver:http://localhost:8888
+  cloud:
+    config:
+      enabled: false
+  data:
+    mongodb:
+      uri: mongodb://mongo:27017/notification
+  kafka:
+    consumer:
+      bootstrap-servers: PLAINTEXT://kafka:9090
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: '*'
+        spring.json.type.mapping: orderConfirmation:org.keshav.notification.kafka.order.OrderConfirmation,paymentNotificationRequest:org.keshav.notification.kafka.payment.PaymentConfirmation
+      group-id: paymentGroup,orderGroup
+      auto-offset-reset: earliest
+    producer:
+      bootstrap-servers: PLAINTEXT://kafka:9090
+  mail:
+    host: mail-dev
+    port: 1025
+    username: keshav
+    password: keshav
+    properties:
+      mail:
+        smtp:
+          trust: "*"
+        auth: true
+        starttls:
+          enabled: true
+        connectiontimeout: 5000
+        timeout: 3000
+        writetimeout: 5000
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discovery-server:8761/eureka/
+
+management:
+  zipkin:
+    tracing:
+      endpoint: http://zipkin:9411/api/v2/spans
+      connect-timeout: 1s
+      read-timeout: 10s
+  tracing:
+    sampling:
+      probability: 1.0
+  endpoints:
+    web:
+      exposure:
+        include: health,info

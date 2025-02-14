@@ -1,6 +1,6 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost:27018/customerdb
+      uri: mongodb://mongo:27017/customerdb
 server:
   port: 8090
